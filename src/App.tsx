@@ -1,7 +1,11 @@
+import { Routes, Route } from 'react-router-dom';
+import { Login } from './pages/Login';
 import './styles/global.css';
 
 export function App() {
   return (
-    <div className='font-bold text-2xl text-brown-900'>Iluminar</div>
+    <Routes>
+      <Route path="/" element={<Login />} />
+    </Routes>
   )
 }
