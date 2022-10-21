@@ -14,7 +14,7 @@ export function Login() {
         <Heading size="xs" className="mt-[-20px]">Página de Funcionário!</Heading>
       </header>
       <form className="flex flex-col gap-4 items-stretch w-full max-w-[300px]">
-        <label htmlFor="email" id="email" className="flex flex-col gap-3">
+        <label htmlFor="email" className="flex flex-col gap-3">
           <Text className="font-semibold">Endereço de e-mail</Text>
           <TextInput.Root>
             <TextInput.Icon>
@@ -24,7 +24,7 @@ export function Login() {
           </TextInput.Root>
         </label>
 
-        <label htmlFor="password" id="password" className="flex flex-col gap-3">
+        <label htmlFor="password" className="flex flex-col gap-3">
           <Text className="font-semibold">Sua senha</Text>
           <TextInput.Root>
             <TextInput.Icon>
@@ -34,11 +34,11 @@ export function Login() {
           </TextInput.Root>
         </label>
         
-        <label htmlFor="remember" id='remamber' className="flex items-center gap-2">
-          <Checkbox id='remamber' />
+        <label htmlFor="remember" className="flex items-center gap-2">
+          <Checkbox id="remember"/>
           <Text size="sm">
             Lembrar-me de mim por 9H
-          </Text>
+          </Text> 
         </label>
 
         <Button type="submit">Logar</Button>
