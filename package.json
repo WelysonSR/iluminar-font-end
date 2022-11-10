@@ -12,6 +12,9 @@
     "deploy-storybook": "storybook-to-ghpages"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/material": "^5.10.13",
     "@radix-ui/react-checkbox": "^1.0.1",
     "@radix-ui/react-slot": "^1.0.1",
     "@storybook/addon-a11y": "^6.5.12",
