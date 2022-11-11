@@ -9,9 +9,7 @@ export const setToken = (token: string) => {
 };
 
 export const requestLogin = async (rota: string, body: object) => {
-  console.log(body);  
-  const data = await api.post(rota, body);
-  console.log(data);  
+  const { data } = await api.post(rota, body);
   return data;
 };
 
