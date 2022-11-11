@@ -8,12 +8,14 @@ import { Checkbox } from "../components/Checkbox";
 import { Button } from "../components/Button";
 import { Alert } from "@mui/material";
 import { requestLogin } from '../services/requests';
+import { useNavigate } from "react-router-dom";
 
 export function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [checked, setChecked] = useState(false);
   const [failedLogin, setFailedLogin] = useState(false);
+  const navigate = useNavigate();
   
   const logar = async (event: FormEvent) => {
     event.preventDefault();
@@ -22,6 +24,10 @@ export function Login() {
       const response = await requestLogin('/user/login', { email, password, checked });
       if (!response) throw new Error();
       localStorage.setItem('user', JSON.stringify(response));
+      if (response.role === 'boss') {
+        return navigate("/homeadm");
+      }
+      return navigate("/homefunsionario");
     } catch (err) {
       setFailedLogin(true);
     }
