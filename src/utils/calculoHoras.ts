@@ -1,4 +1,4 @@
-const date = new Date();
+export const date = new Date();
 
 // interface IBh {
 //   bancoHora: string;
