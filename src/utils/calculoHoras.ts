@@ -6,7 +6,7 @@ const date = new Date();
 //   dia: string;
 //   horaEntrada: string;
 //   horaSaida: string;
-//   transporte: string;
+//   transporte: number;
 //   userId: number;
 // }
 

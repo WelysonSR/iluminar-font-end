@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Header } from '../components/Header';
 import { requestUserId, requestUsers } from "../services/requests";
 import { calculoBhMesAnterior, calculoBhMesAtual, somaBh } from "../utils/calculoHoras";
+import { calculoTraspoetMes } from "../utils/calculoTaspoertMes";
 
 interface IUser {
   id: number;
@@ -23,6 +24,7 @@ export function HomeAdm () {
   const [bhMesAnterior, setBhMesAnterior] = useState('');
   const [bhMesAtual, setBhMesAtual] = useState('');
   const [bhTotal, setBhTotal] = useState('');
+  const [transporteMes, setTransporteMes] = useState(0);
 
   useEffect(() => {
     try {
@@ -42,9 +44,11 @@ export function HomeAdm () {
 
   const préVisualizacao = async (id: number) => {
     const user = await requestUserId('/user/user', id, token);
+    
     setUserName(user.firstName);
     setBhMesAnterior(calculoBhMesAnterior(user.dailyControl));
     setBhMesAtual(calculoBhMesAtual(user.dailyControl));
+    setTransporteMes(calculoTraspoetMes(user.dailyControl));
   }
 
   useEffect(() => {
@@ -105,7 +109,7 @@ export function HomeAdm () {
               <p className="mt-[4px]">{ `BH Mês Atual: ${bhMesAtual}` }</p>
               <p className="mt-[4px]">{ `BH Total: ${bhTotal}` }</p>
               <p className="mt-[4px]">{ `Transporte diário: R$ 9,60` }</p>
-              <p className="mt-[4px]">{ `Transporte do mês: ${userName}` }</p>
+              <p className="mt-[4px]">{ `Transporte do mês: R$ ${transporteMes}` }</p>
             </div>
             <button
               type="button"
