@@ -28,9 +28,13 @@ export const getData = async (rota: string) => {
   return data;
 };
 
-export const requestDetails = async (rota: string, id: number) => {
+export const requestUserId = async (rota: string, id: number, token: string) => {
   const url = `${rota}/${id}`;
-  const { data } = await api.get(url);
+  const { data } = await api.get(url,{
+    headers: {
+      'Authorization': token
+    }
+  });
   return data;
 };
 

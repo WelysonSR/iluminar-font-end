@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Header } from '../components/Header';
-import { requestUsers } from "../services/requests";
+import { requestUserId, requestUsers } from "../services/requests";
+import { calculoBhMesAnterior, calculoBhMesAtual, somaBh } from "../utils/calculoHoras";
 
 interface IUser {
   id: number;
@@ -15,11 +16,18 @@ interface IUser {
 
 export function HomeAdm () {
   const navigate = useNavigate();
+  const [token, setToken] = useState('');
   const [users, setUsers] = useState([]);
+
+  const [userName, setUserName] = useState('');
+  const [bhMesAnterior, setBhMesAnterior] = useState('');
+  const [bhMesAtual, setBhMesAtual] = useState('');
+  const [bhTotal, setBhTotal] = useState('');
 
   useEffect(() => {
     try {
       const { role, token } = JSON.parse(localStorage.getItem('user') || '');
+      setToken(token);
       if (role === 'employee' || role === '') throw new Error();
       const getUsers = async () => {
         const users = await requestUsers(token);
@@ -31,6 +39,17 @@ export function HomeAdm () {
       return navigate('/');
     }
   }, []);
+
+  const préVisualizacao = async (id: number) => {
+    const user = await requestUserId('/user/user', id, token);
+    setUserName(user.firstName);
+    setBhMesAnterior(calculoBhMesAnterior(user.dailyControl));
+    setBhMesAtual(calculoBhMesAtual(user.dailyControl));
+  }
+
+  useEffect(() => {
+    setBhTotal(somaBh(bhMesAnterior, bhMesAtual));
+  }, [bhMesAnterior, bhMesAtual])
   
   return (
     <section className="flex flex-col items-center">
@@ -60,12 +79,13 @@ export function HomeAdm () {
 
             <div className="w-[376px] mt-[12px] ml-[9px] rounded border-2 border-brown-600"></div>
 
-            <ol className="list-decimal mt-[12px] ml-[35px]">
+            <ol className="list-decimal list-outside mt-[12px] ml-[35px]">
               {
                 users.map(({id, firstName, lestName}) => (
                   <li
                     key={id}
-                    className="mt-[2px]"
+                    className="mt-[2px] cursor-pointer"
+                    onClick={() => préVisualizacao(id)}
                   >
                     {`${firstName} ${lestName}`}
                   </li>
@@ -75,6 +95,26 @@ export function HomeAdm () {
           </div>
         </div>
         
+        <div className="flex flex-col items-center">
+          <p className="font-semibold mt-[18px]">Pré visualização de funcionário</p>
+
+          <div className="bg-gold-500 rounded mt-[16px] w-[394px] h-[185px] flex justify-between">
+            <div className="ml-[20px]">
+              <p className="mt-[14px]">{ `Nome: ${userName}` }</p>
+              <p className="mt-[4px]">{ `BH Mês Anterior: ${bhMesAnterior}` }</p>
+              <p className="mt-[4px]">{ `BH Mês Atual: ${bhMesAtual}` }</p>
+              <p className="mt-[4px]">{ `BH Total: ${bhTotal}` }</p>
+              <p className="mt-[4px]">{ `Transporte diário: R$ 9,60` }</p>
+              <p className="mt-[4px]">{ `Transporte do mês: ${userName}` }</p>
+            </div>
+            <button
+              type="button"
+              className="bg-brown-800 font-semibold mt-[14px] mr-[12px] rounded w-[100px] h-[48px]"
+            >
+              Visualizar
+            </button>
+          </div>
+        </div>
       </div>
     </section>
   )
