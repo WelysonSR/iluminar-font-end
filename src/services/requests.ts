@@ -4,10 +4,6 @@ const api = axios.create({
   baseURL: 'http://localhost:3001',
 });
 
-export const setToken = (token: string) => {
-  api.defaults.headers.common.Authorization = token;
-};
-
 export const requestLogin = async (rota: string, body: object) => {
   const { data } = await api.post(rota, body);
   return data;
@@ -18,10 +14,13 @@ export const requestRegister = async (rota: string, body: object) => {
   return data;
 };
 
-export const requestProducts = async () => {
-  const rota = 'http://localhost:3001/products';
-  const { data } = await api.get(rota);
-  return data;
+export const requestUsers = async (token: string) => {
+  const { data } = await api.get('/user/users',{
+    headers: {
+      'Authorization': token
+    }
+  });
+  return data.message;
 };
 
 export const getData = async (rota: string) => {
