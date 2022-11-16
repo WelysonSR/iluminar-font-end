@@ -3,11 +3,20 @@ import { Link } from "react-router-dom";
 import { FormAddresses } from "../components/FormAddresses";
 import { FormUser } from "../components/FormUser";
 import { Header } from "../components/Header";
+import { requestRegisterAddress, requestRegisterUser } from "../services/requests";
 
 export function FormAdm() {
-  const cadastrar = (event: FormEvent) => {
+  const [user, setUser] = useState({});
+  const [address, setAddress] = useState({});
+
+  const cadastrar = async (event: FormEvent) => {
     event.preventDefault();
-    console.log('Clicado');
+    const { token } = JSON.parse(localStorage.getItem('user') || '');    
+    const {userId} = await requestRegisterUser('user/creat', user, token);
+    const newAddress = await requestRegisterAddress('/address', { ...address, userId}, token);
+    if(userId && newAddress) {
+      alert('Usuário criado com sucesso!')
+    }
   }
 
   return (
@@ -31,8 +40,8 @@ export function FormAdm() {
         </div>
 
         <form onSubmit={cadastrar} method="post" className="flex flex-col items-center">
-          <FormUser />
-          <FormAddresses />
+          <FormUser onSetUser={setUser} />
+          <FormAddresses onSetAddress={setAddress} />
           <button
             type="submit"
             className="bg-gold-900 font-semibold mt-[12px] rounded w-[300px] h-[48px]"

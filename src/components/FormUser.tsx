@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export function FormUser() {
+interface IPropsUser {
+  onSetUser: (info: object) => void;
+}
+
+export function FormUser({ onSetUser }: IPropsUser) {
   const [firstName, setFirstName] = useState('');
   const [lestName, setLestName] = useState('');
   const [email, setEmail] = useState('');
@@ -8,6 +12,10 @@ export function FormUser() {
   const [cpf, setCpf] = useState('');
   const [phone, setPhone] = useState('');
   const [role, setRole] = useState('');
+
+  useEffect(() => {
+    onSetUser({ firstName, lestName, email, password, cpf, phone, role })
+  }, [firstName, lestName, email, password, cpf, phone, role,]);
 
   return (
     <div>
@@ -24,7 +32,7 @@ export function FormUser() {
         />
         <input
           type="text"
-          name=""
+          name="lestName"
           value={lestName}
           placeholder="  *Sobrenome"
           onChange={({ target }) => setLestName(target.value)}
@@ -33,7 +41,7 @@ export function FormUser() {
         />
         <input
           type="text"
-          name=""
+          name="cpf"
           value={cpf}
           placeholder="  CPF"
           onChange={({ target }) => setCpf(target.value)}
@@ -41,7 +49,7 @@ export function FormUser() {
         />
         <input
           type="text"
-          name=""
+          name="phone"
           value={phone}
           placeholder="  Telefone"
           onChange={({ target }) => setPhone(target.value)}
@@ -49,7 +57,7 @@ export function FormUser() {
         />
         <input
           type="email"
-          name=""
+          name="email"
           value={email}
           placeholder="  *Digite o e-mail"
           onChange={({ target }) => setEmail(target.value)}
@@ -58,7 +66,7 @@ export function FormUser() {
         />
         <input
           type="password"
-          name=""
+          name="password"
           value={password}
           placeholder="  ********"
           onChange={({ target }) => setPassword(target.value)}
@@ -66,7 +74,7 @@ export function FormUser() {
           required
         />
         <select
-          name=""
+          name="role"
           value={role}
           onChange={({ target }) => setRole(target.value)}
           className="w-[194px] h-[48px] rounded mt-[9px] ml-[2px]"

@@ -9,32 +9,24 @@ export const requestLogin = async (rota: string, body: object) => {
   return data;
 };
 
-export const requestRegister = async (rota: string, body: object) => {
-  const { data } = await api.post(rota, body);
+export const requestRegisterUser = async (rota: string, body: object, token: string) => {
+  const { data } = await api.post(rota, body, { headers: { 'Authorization': token } });
+  return data;
+};
+
+export const requestRegisterAddress = async (rota: string, body: object, token: string) => {
+  const { data } = await api.post(rota, body, { headers: { 'Authorization': token } });
   return data;
 };
 
 export const requestUsers = async (token: string) => {
-  const { data } = await api.get('/user/users',{
-    headers: {
-      'Authorization': token
-    }
-  });
+  const { data } = await api.get('/user/users', { headers: { 'Authorization': token } });
   return data.message;
-};
-
-export const getData = async (rota: string) => {
-  const { data } = await api.get(rota);
-  return data;
 };
 
 export const requestUserId = async (rota: string, id: number, token: string) => {
   const url = `${rota}/${id}`;
-  const { data } = await api.get(url,{
-    headers: {
-      'Authorization': token
-    }
-  });
+  const { data } = await api.get(url, { headers: { 'Authorization': token } });
   return data;
 };
 
