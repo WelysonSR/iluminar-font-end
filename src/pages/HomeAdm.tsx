@@ -15,7 +15,7 @@ interface IUser {
   phone: string;
 }
 
-export function HomeAdm () {
+export function HomeAdm() {
   const navigate = useNavigate();
   const [token, setToken] = useState('');
   const [users, setUsers] = useState([]);
@@ -34,27 +34,27 @@ export function HomeAdm () {
       const getUsers = async () => {
         const users = await requestUsers(token);
         const newUsers = users.filter((user: IUser) => user.role === 'employee')
-        setUsers(newUsers);        
+        setUsers(newUsers);
       }
       getUsers();
-    } catch(err) {
+    } catch (err) {
       return navigate('/');
     }
   }, []);
 
   const préVisualizacao = async (id: number) => {
-    const user = await requestUserId('/user/user', id, token);
-    
-    setUserName(user.firstName);
-    setBhMesAnterior(calculoBhMesAnterior(user.dailyControl));
-    setBhMesAtual(calculoBhMesAtual(user.dailyControl));
-    setTransporteMes(calculoTraspoetMes(user.dailyControl));
+    const { response } = await requestUserId('/user/user', id, token);
+
+    setUserName(response.firstName);
+    setBhMesAnterior(calculoBhMesAnterior(response.dailyControl));
+    setBhMesAtual(calculoBhMesAtual(response.dailyControl));
+    setTransporteMes(calculoTraspoetMes(response.dailyControl));
   }
 
   useEffect(() => {
     setBhTotal(somaBh(bhMesAnterior, bhMesAtual));
   }, [bhMesAnterior, bhMesAtual])
-  
+
   return (
     <section className="flex flex-col items-center">
       <Header />
@@ -85,7 +85,7 @@ export function HomeAdm () {
 
             <ol className="list-decimal list-outside mt-[12px] ml-[35px]">
               {
-                users.map(({id, firstName, lestName}) => (
+                users.map(({ id, firstName, lestName }) => (
                   <li
                     key={id}
                     className="mt-[2px] cursor-pointer"
@@ -98,18 +98,18 @@ export function HomeAdm () {
             </ol>
           </div>
         </div>
-        
+
         <div className="flex flex-col items-center">
           <p className="font-semibold mt-[18px]">Pré visualização de funcionário</p>
 
           <div className="bg-gold-500 rounded mt-[16px] w-[394px] h-[185px] flex justify-between">
             <div className="ml-[20px]">
-              <p className="mt-[14px]">{ `Nome: ${userName}` }</p>
-              <p className="mt-[4px]">{ `BH Mês Anterior: ${bhMesAnterior}` }</p>
-              <p className="mt-[4px]">{ `BH Mês Atual: ${bhMesAtual}` }</p>
-              <p className="mt-[4px]">{ `BH Total: ${bhTotal}` }</p>
-              <p className="mt-[4px]">{ `Transporte diário: R$ 9,60` }</p>
-              <p className="mt-[4px]">{ `Transporte do mês: R$ ${transporteMes}` }</p>
+              <p className="mt-[14px]">{`Nome: ${userName}`}</p>
+              <p className="mt-[4px]">{`BH Mês Anterior: ${bhMesAnterior}`}</p>
+              <p className="mt-[4px]">{`BH Mês Atual: ${bhMesAtual}`}</p>
+              <p className="mt-[4px]">{`BH Total: ${bhTotal}`}</p>
+              <p className="mt-[4px]">{`Transporte diário: R$ 9,60`}</p>
+              <p className="mt-[4px]">{`Transporte do mês: R$ ${transporteMes}`}</p>
             </div>
             <button
               type="button"
