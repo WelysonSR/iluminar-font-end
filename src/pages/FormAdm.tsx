@@ -12,11 +12,11 @@ export function FormAdm() {
 
   const cadastrar = async (event: FormEvent) => {
     event.preventDefault();
-    const { token } = JSON.parse(localStorage.getItem('user') || '');    
-    const {userId} = await requestRegisterUser('user/creat', user, token);
-    const newAddress = await requestRegisterAddress('/address', { ...address, userId}, token);
+    const { token } = JSON.parse(localStorage.getItem('user') || '');
+    const { userId } = await requestRegisterUser('user/creat', user, token);
+    const newAddress = await requestRegisterAddress('/address', { ...address, userId }, token);
     setClear(true);
-    if(userId && newAddress) {
+    if (userId && newAddress) {
       alert('Usuário criado com sucesso!')
     }
   }

@@ -10,8 +10,12 @@ export const requestLogin = async (rota: string, body: object) => {
 };
 
 export const requestRegisterUser = async (rota: string, body: object, token: string) => {
-  const { data } = await api.post(rota, body, { headers: { 'Authorization': token } });
-  return data;
+  try {
+    const { data } = await api.post(rota, body, { headers: { 'Authorization': token } });
+    return data;
+  } catch (err: any) {
+    alert(err.response.data.message);
+  }
 };
 
 export const requestRegisterAddress = async (rota: string, body: object, token: string) => {
