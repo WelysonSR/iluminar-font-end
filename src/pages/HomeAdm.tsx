@@ -21,9 +21,9 @@ export function HomeAdm() {
   const [users, setUsers] = useState([]);
 
   const [userName, setUserName] = useState('');
-  const [bhMesAnterior, setBhMesAnterior] = useState('');
-  const [bhMesAtual, setBhMesAtual] = useState('');
-  const [bhTotal, setBhTotal] = useState('');
+  const [bhMesAnterior, setBhMesAnterior] = useState('00:00');
+  const [bhMesAtual, setBhMesAtual] = useState('00:00');
+  const [bhTotal, setBhTotal] = useState('00:00');
   const [transporteMes, setTransporteMes] = useState(0);
 
   useEffect(() => {
@@ -45,10 +45,17 @@ export function HomeAdm() {
   const préVisualizacao = async (id: number) => {
     const response = await requestUserId('/user/user', id, token);
 
-    setUserName(response.firstName);
-    setBhMesAnterior(calculoBhMesAnterior(response.dailyControl));
-    setBhMesAtual(calculoBhMesAtual(response.dailyControl));
-    setTransporteMes(calculoTraspoetMes(response.dailyControl));
+    if(response.id) {
+      setUserName(response.firstName);
+      setBhMesAnterior(calculoBhMesAnterior(response.dailyControl));
+      setBhMesAtual(calculoBhMesAtual(response.dailyControl));
+      setTransporteMes(calculoTraspoetMes(response.dailyControl));
+    } else {
+      setUserName('');
+      setBhMesAnterior('00:00');
+      setBhMesAtual('00:00');
+      setTransporteMes(0);
+    }
   }
 
   useEffect(() => {

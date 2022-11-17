@@ -25,9 +25,13 @@ export const requestUsers = async (token: string) => {
 };
 
 export const requestUserId = async (rota: string, id: number, token: string) => {
-  const url = `${rota}/${id}`;
-  const { data } = await api.get(url, { headers: { 'Authorization': token } });
-  return data;
+  try {
+    const url = `${rota}/${id}`;
+    const { data } = await api.get(url, { headers: { 'Authorization': token } });
+    return data;
+  } catch (err: any) {
+    return err.message;
+  }
 };
 
 export const requestUpdate = async (rota: string, id: number, body: object) => {

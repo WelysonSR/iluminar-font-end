@@ -121,7 +121,9 @@ export const somaBh = (mesAn: string, mesAt: string) => {
   const minutos = Number(eM) + Number(sM);
   const horas = Number(eH) + Number(sH);
 
-  if (minutos < 10) {
+  if(horas === 0 && !minutos) return '00:00' ;
+
+  if(minutos < 10) {
     return `${horas}:0${minutos}`;
   }
 
