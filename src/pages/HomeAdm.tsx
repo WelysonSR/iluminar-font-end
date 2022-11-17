@@ -43,7 +43,7 @@ export function HomeAdm() {
   }, []);
 
   const préVisualizacao = async (id: number) => {
-    const { response } = await requestUserId('/user/user', id, token);
+    const response = await requestUserId('/user/user', id, token);
 
     setUserName(response.firstName);
     setBhMesAnterior(calculoBhMesAnterior(response.dailyControl));
