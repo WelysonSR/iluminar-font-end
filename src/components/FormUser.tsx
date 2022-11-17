@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 
 interface IPropsUser {
   onSetUser: (info: object) => void;
+  onSetClear: (info: boolean) => void;
+  onClear: boolean;
 }
 
-export function FormUser({ onSetUser }: IPropsUser) {
+export function FormUser({ onSetUser, onSetClear, onClear }: IPropsUser) {
   const [firstName, setFirstName] = useState('');
   const [lestName, setLestName] = useState('');
   const [email, setEmail] = useState('');
@@ -12,6 +14,18 @@ export function FormUser({ onSetUser }: IPropsUser) {
   const [cpf, setCpf] = useState('');
   const [phone, setPhone] = useState('');
   const [role, setRole] = useState('');
+
+  useEffect(() => {
+    if(onClear){
+      setFirstName('');
+      setLestName('');
+      setEmail('');
+      setCpf('');
+      setPhone('');
+      setRole('');
+      onSetClear(false);
+    }
+  }, [onClear]);
 
   useEffect(() => {
     onSetUser({ firstName, lestName, email, password, cpf, phone, role })
@@ -80,7 +94,7 @@ export function FormUser({ onSetUser }: IPropsUser) {
           className="w-[194px] h-[48px] rounded mt-[9px] ml-[2px]"
           required
         >
-          <option>Cargo</option>
+          <option value="" disabled={true}>Cargo</option>
           <option value="boss">Lider</option>
           <option value="employee">Funsionario</option>
         </select>

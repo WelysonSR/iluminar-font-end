@@ -2,15 +2,29 @@ import { useEffect, useState } from "react"
 
 interface IPropsAddress {
   onSetAddress: (info: object) => void;
+  onSetClear: (info: boolean) => void;
+  onClear: boolean;
 }
 
-export function FormAddresses({onSetAddress}: IPropsAddress) {
+export function FormAddresses({onSetAddress, onSetClear, onClear}: IPropsAddress) {
   const [logradouro, setLogradouro] = useState('');
   const [complemento, setComplemento] = useState('');
   const [bairro, setBairro] = useState('');
   const [localidade, setLocalidade] = useState('');
   const [cep, setCep] = useState('');
   const [uf, setUf] = useState('');
+
+  useEffect(() => {
+    if(onClear){
+      setLogradouro('');
+      setComplemento('');
+      setBairro('');
+      setLocalidade('');
+      setCep('');
+      setUf('');
+      onSetClear(false);
+    }
+  }, [onClear]);
 
   useEffect(() => {
     const getCep = async () => {

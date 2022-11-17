@@ -8,12 +8,14 @@ import { requestRegisterAddress, requestRegisterUser } from "../services/request
 export function FormAdm() {
   const [user, setUser] = useState({});
   const [address, setAddress] = useState({});
+  const [clear, setClear] = useState(false);
 
   const cadastrar = async (event: FormEvent) => {
     event.preventDefault();
     const { token } = JSON.parse(localStorage.getItem('user') || '');    
     const {userId} = await requestRegisterUser('user/creat', user, token);
     const newAddress = await requestRegisterAddress('/address', { ...address, userId}, token);
+    setClear(true);
     if(userId && newAddress) {
       alert('Usuário criado com sucesso!')
     }
@@ -40,8 +42,8 @@ export function FormAdm() {
         </div>
 
         <form onSubmit={cadastrar} method="post" className="flex flex-col items-center">
-          <FormUser onSetUser={setUser} />
-          <FormAddresses onSetAddress={setAddress} />
+          <FormUser onSetUser={setUser} onSetClear={setClear} onClear={clear} />
+          <FormAddresses onSetAddress={setAddress} onSetClear={setClear} onClear={clear} />
           <button
             type="submit"
             className="bg-gold-900 font-semibold mt-[12px] rounded w-[300px] h-[48px]"
