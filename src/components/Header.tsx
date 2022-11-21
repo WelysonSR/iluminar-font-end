@@ -6,9 +6,10 @@ import { useNavigate } from 'react-router';
 
 export function Header() {
   const navigate = useNavigate();
+
   const logout = () => {
     localStorage.removeItem('user');
-    navigate('/')
+    navigate('/');
   }
 
   return (
