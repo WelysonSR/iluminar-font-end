@@ -46,7 +46,7 @@ export function FormAdm() {
           <FormAddresses onSetAddress={setAddress} onSetClear={setClear} onClear={clear} />
           <button
             type="submit"
-            className="bg-gold-900 font-semibold mt-[12px] rounded w-[300px] h-[48px]"
+            className="bg-gold-900 font-semibold mt-[12px] rounded w-[300px] h-[48px] text-center"
           >
             Cadastrar
           </button>

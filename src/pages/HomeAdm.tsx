@@ -120,7 +120,7 @@ export function HomeAdm() {
             </div>
             <button
               type="button"
-              className="bg-brown-800 font-semibold mt-[14px] mr-[12px] rounded w-[100px] h-[48px]"
+              className="bg-brown-800 font-semibold mt-[14px] mr-[12px] rounded w-[100px] h-[48px] text-center"
             >
               Visualizar
             </button>
