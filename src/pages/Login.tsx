@@ -90,7 +90,7 @@ export function Login() {
           </Text> 
         </label>
 
-        <Button type="submit">Logar</Button>
+        <Button type="submit" className="text-center">Logar</Button>
       </form>
 
       <footer className='flex flex-col items-center gap-4'>

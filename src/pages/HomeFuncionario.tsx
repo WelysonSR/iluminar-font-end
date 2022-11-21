@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../components/Header";
+import { TableDuo } from "../components/TableDuo";
 
 export function HomeFunsionario () {
   const navigate = useNavigate();
@@ -15,9 +16,12 @@ export function HomeFunsionario () {
   });
 
   return (
-    <section>
+    <section className="flex flex-col items-center w-[428px] ml-auto mr-auto border-2 border-brown-600">
       <Header />
-      <h1>Home Funsionario</h1>
+      <div className="w-[416px] mt-[60px] flex justify-between">
+        <TableDuo referente={'VT'} valor={'57.60'}/>
+        <TableDuo referente={'BH'} valor={'00:10'}/>
+      </div>
     </section>
   )
 }
